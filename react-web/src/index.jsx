@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDom from 'react-dom';
 import styles from './scss/index.scss';
 
@@ -15,9 +15,23 @@ const SayHello = (props) => {
     ));
 }
 
+const Main = () => {
+    // 會回傳一個陣列， count 為 0 ， setCount 用來設置 count
+    const [count, setCount] = useState(0);
+    return (
+        <>
+            <h1 className={styles.main}>{count}</h1>
+            <button type='button' onClick={() => setCount(count + 1)}>
+                點我+1
+            </button>
+        </>
+    );
+}
+
+
 
 ReactDom.render(
     <div>
-        <SayHello names={['World', '', 'Apple', 'Red', 'Colleen']} />
+        <Main names={['World', '', 'Apple', 'Red', 'Colleen']} />
     </div>,
     document.getElementById('root'));
