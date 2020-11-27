@@ -20,17 +20,17 @@ const Counter = () => {
     useEffect(() => {
         console.log('Component Render 後執行');
         return () => {
-          console.log('Component 移除執行');
+            console.log('Component 移除執行');
         }
-      }, []);
-      
-      const [count, setCount] = useState(0);
-      useEffect(() => {
-        console.log(`State 改變前 ${count}`)
+    }, []);
+
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        console.log(`State 改變後 ${count}`)
         return () => {
-          console.log(`State 改變後 ${count}`);
+            console.log(`State 改變前 ${count}`);
         };
-      }, [count]);
+    }, [count]);
     return (
         <>
             <h1 className={styles.main}>{count}</h1>
@@ -41,14 +41,14 @@ const Counter = () => {
     );
 }
 
-const Main  = () => {
+const Main = () => {
     const [hiddenCounter, setHiddenCounter] = useState(false);
     return (
         <>
             <button type='button' onClick={() => setHiddenCounter(!hiddenCounter)}>
                 開啟關閉計時器
             </button>
-            {hiddenCounter ? null : <Counter />}
+            {hiddenCounter ? <SayHello names={['World', '', 'Apple', 'Red', 'Colleen']} /> : <Counter />}
         </>
     );
 }
@@ -57,6 +57,6 @@ const Main  = () => {
 
 ReactDom.render(
     <div>
-        <Main names={['World', '', 'Apple', 'Red', 'Colleen']} />
+        <Main />
     </div>,
     document.getElementById('root'));
