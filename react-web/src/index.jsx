@@ -1,10 +1,8 @@
-import React, {
-    useState, createContext, useContext,
-} from 'react';
+import React from 'react';
 import ReactDom from 'react-dom';
+import { Provider, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
-const TodoListContext = createContext();
+import store from './store';
 
 const Task = (props) => {
     const { task } = props;
@@ -20,7 +18,7 @@ Task.defaultProps = {
 };
 
 const TodoList = () => {
-    const todoList = useContext(TodoListContext);
+    const todoList = useSelector(state => state.todoList);
     return todoList.map(task => (
         <ul key={task}>
             <Task task={task} />
@@ -36,24 +34,24 @@ const TodoListPage = () => (
 );
 
 const CurrentTask = () => {
-    const todoList = useContext(TodoListContext);
+    const todoList = useSelector(state => state.todoList);
     return <div>{`下一件事要做：${todoList[0]}`}</div>;
 };
 
 const Main = () => {
-    const [todoList] = useState(['first', 'second']);
+    const todoList = useSelector(state => state.todoList);
     return (
-        <TodoListContext.Provider value={todoList}>
-            <div>
-                <span>{`代辦事項數：${todoList.length}`}</span>
-                <TodoListPage />
-                <CurrentTask />
-            </div>
-        </TodoListContext.Provider>
+        <div>
+            <span>{`代辦事項數：${todoList.length}`}</span>
+            <TodoListPage />
+            <CurrentTask />
+        </div>
     );
 };
 
 ReactDom.render(
-    <Main />,
+    <Provider store={store}>
+        <Main />
+    </Provider>,
     document.getElementById('root'),
 );
